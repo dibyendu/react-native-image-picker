@@ -1,0 +1,24 @@
+name: Build application binaries
+
+on: workflow_dispatch
+
+jobs:
+  build-apps:
+    strategy:
+      matrix:
+        os:   [macos-12]
+        ruby: [2.7.6]
+    name: Build
+    runs-on: ${{ matrix.os }}
+    steps:
+
+      - run: echo $PATH
+      - run: ruby --version
+
+      - name: Use Ruby ${{ matrix.ruby }}
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+
+      - run: ruby --version
